@@ -46,6 +46,22 @@ const MOVIE_DATA = [
   },
 ];
 
+const CATEGORY_DATA = [
+  { id: "c-1", name: "drama" },
+  { id: "c-2", name: "action" },
+  { id: "c-3", name: "adventeru" },
+  { id: "c-4", name: "historical" },
+];
+
+export const getCategories = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(CATEGORY_DATA);
+      // reject('Cannot fetch data!')
+    }, 50);
+  });
+};
+
 export const getMovies = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
