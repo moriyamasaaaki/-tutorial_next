@@ -1,21 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const MovieCreatehtmlForm = (props) => {
-  const [htmlForm, sethtmlForm] = useState({
+const MovieCreateform = (props) => {
+  const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false);
+
+  const defaultData = {
     name: "",
     description: "",
     rating: "",
     image: "",
     cover: "",
     longDesc: "",
-  });
+  };
+
+  const formData = props.initialData ? { ...props.initialData } : defaultData;
+
+  const [form, setform] = useState(formData);
 
   const handleChange = (event) => {
     const target = event.target;
     const name = target.name;
 
-    sethtmlForm({
-      ...htmlForm,
+    setform({
+      ...form,
       [name]: target.value,
     });
   };
@@ -31,101 +37,101 @@ const MovieCreatehtmlForm = (props) => {
       }
     }
 
-    sethtmlForm({
-      ...htmlForm,
+    setform({
+      ...form,
       genre: value.toString(),
     });
   };
 
-  const submithtmlForm = () => {
-    props.handleFormSubmit({ ...htmlForm });
+  const submitform = () => {
+    props.handleFormSubmit({ ...form });
   };
 
   return (
     <form>
-      <div className="htmlForm-group">
-        <label htmlFor="name">名前</label>
+      <div className="form-group">
+        <label for="name">名前</label>
         <input
           onChange={handleChange}
-          value={htmlForm.name}
+          value={form.name}
           name="name"
           type="text"
-          className="htmlForm-control"
+          className="form-control"
           id="name"
           aria-describedby="emailHelp"
           placeholder="Lord of the Rings"
         />
       </div>
-      <div className="htmlForm-group">
-        <label htmlFor="description">概要</label>
+      <div className="form-group">
+        <label for="description">概要</label>
         <input
           onChange={handleChange}
-          value={htmlForm.description}
+          value={form.description}
           name="description"
           type="text"
-          className="htmlForm-control"
+          className="form-control"
           id="description"
           placeholder="Somewhere in Middle-earth..."
         />
       </div>
-      <div className="htmlForm-group">
-        <label htmlFor="description">評価</label>
+      <div className="form-group">
+        <label for="description">評価</label>
         <input
           onChange={handleChange}
-          value={htmlForm.rating}
+          value={form.rating}
           name="rating"
           type="number"
           max="5"
           min="0"
-          className="htmlForm-control"
+          className="form-control"
           id="rating"
           placeholder="3"
         />
-        <small id="emailHelp" className="htmlForm-text text-muted">
+        <small id="emailHelp" className="form-text text-muted">
           Max: 5, Min: 0{" "}
         </small>
       </div>
-      <div className="htmlForm-group">
-        <label htmlFor="image">画像</label>
+      <div className="form-group">
+        <label for="image">画像</label>
         <input
           onChange={handleChange}
-          value={htmlForm.image}
+          value={form.image}
           name="image"
           type="text"
-          className="htmlForm-control"
+          className="form-control"
           id="image"
           placeholder="http://....."
         />
       </div>
-      <div className="htmlForm-group">
-        <label htmlFor="cover">カバー画像</label>
+      <div className="form-group">
+        <label for="cover">カバー画像</label>
         <input
           onChange={handleChange}
-          value={htmlForm.cover}
+          value={form.cover}
           name="cover"
           type="text"
-          className="htmlForm-control"
+          className="form-control"
           id="cover"
           placeholder="http://......"
         />
       </div>
-      <div className="htmlForm-group">
-        <label htmlFor="longDesc">内容</label>
+      <div className="form-group">
+        <label for="longDesc">内容</label>
         <textarea
           onChange={handleChange}
-          value={htmlForm.longDesc}
+          value={form.longDesc}
           name="longDesc"
-          className="htmlForm-control"
+          className="form-control"
           id="longDesc"
           rows="3"
         ></textarea>
       </div>
-      <div className="htmlForm-group">
-        <label htmlFor="genre">ジャンル</label>
+      <div className="form-group">
+        <label for="genre">ジャンル</label>
         <select
           onChange={handleGenreChange}
           multiple
-          className="htmlForm-control"
+          className="form-control"
           id="genre"
         >
           <option>drama</option>
@@ -135,15 +141,11 @@ const MovieCreatehtmlForm = (props) => {
           <option>action</option>
         </select>
       </div>
-      <button
-        onClick={submithtmlForm}
-        type="button"
-        className="btn btn-primary"
-      >
-        作成
+      <button onClick={submitform} type="button" className="btn btn-primary">
+        {props.submitButton || "Create"}
       </button>
     </form>
   );
 };
 
-export default MovieCreatehtmlForm;
+export default MovieCreateform;
